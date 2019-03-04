@@ -98,6 +98,35 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func json(_ sender: Any) {
+        // 1. 전송할 값 준비
+        let userId = (self.userId.text)!
+        let name = (self.name.text)!
+        let param = ["userId" : userId, "name" : name] // JSON 객체로 변환할 딕셔너리 준비
+        let paramData = try! JSONSerialization.data(withJSONObject: param, options: [])
+        
+        // 2. URL 객체 정의
+        let url = URL(string: "http://swiftapi.rubypaper.co.kr:2029/practice/echoJSON")
+        
+        // 3. URLRequest 객체 정의 및 요청 내용 담기
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        request.httpBody = paramData
+        
+        // 4. HTTP 메시지에 포함될 헤더 설정
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(String(paramData.count), forHTTPHeaderField: "Content-Length")
+        
+        // 5. URLSession 객체를 통해 전송 및 응답값 처리 로직 작성
+        let task = URLSession.shared.dataTask(with: request) {
+            (data, response, error) in
+            // 5-1. 서버가 응답이 없거나 통신이 실패했을 때
+            
+            // 5-2. 응답 처리 로직이
+        }
+        // 6. POST 전송
+        task.resume()
+    }
     
 }
 
